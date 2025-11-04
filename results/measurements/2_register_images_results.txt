@@ -1,0 +1,11 @@
+=== EJECUCIÓN: 2025-11-03 22:25:47 ===
+
+Iniciando registro de imágenes...
+Imágenes a procesar: 3
+  - data/original/img1.jpg
+  - data/original/img2.jpg
+  - data/original/img3.jpg
+Imagen 1: 1214 matches, 543 inliers
+Imagen 2: 548 matches, 303 inliers
+
+Dimensiones del panorama: 2108x2292 píxeles

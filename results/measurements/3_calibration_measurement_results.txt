@@ -1,0 +1,93 @@
+=== EJECUCIÓN: 2025-11-03 22:34:00 ===
+
+============================================================
+CALIBRACIÓN Y MEDICIÓN EN PANORAMA
+============================================================
+
+Panorama cargado: 2108x2292 píxeles
+
+Dimensiones conocidas para calibración:
+  - Cuadro de la Virgen de Guadalupe (altura): 117.0 cm
+  - Mesa (ancho): 161.1 cm
+
+============================================================
+CALIBRACIÓN INTERACTIVA
+============================================================
+
+Instrucciones:
+1. Haz clic en dos puntos para medir la ALTURA del cuadro de la Virgen de Guadalupe
+2. Presiona 'Enter' cuando termines
+3. Luego haz clic en dos puntos para medir el ANCHO de la mesa
+4. Presiona 'Enter' cuando termines
+
+Usando escala estimada (no interactivo): 0.2293 cm/px
+NOTA: Para mayor precisión, cambia USE_INTERACTIVE a True
+
+============================================================
+CÁLCULO DE DIMENSIONES ADICIONALES
+============================================================
+
+NOTA: Para mediciones precisas, usa la herramienta interactiva.
+Las mediciones siguientes son ejemplos con valores estimados.
+
+
+Usando mediciones estimadas (cambiar USE_INTERACTIVE_MEASUREMENTS a True para interactivo)
+
+Mediciones realizadas:
+------------------------------------------------------------
+Ancho del cuadro              :   72.50 cm (0.725 m) [316.2 px]
+Largo de la mesa              :  120.83 cm (1.208 m) [527.0 px]
+Ventana (ancho)               :  144.99 cm (1.450 m) [632.4 px]
+Silla (ancho)                 :   38.66 cm (0.387 m) [168.6 px]
+Planta (altura)               :   78.82 cm (0.788 m) [343.8 px]
+
+============================================================
+DIMENSIONES DEL CUADRO Y MESA
+============================================================
+
+Cuadro de la Virgen de Guadalupe:
+  - Altura (conocida): 117.0 cm
+  - Ancho (medido):    72.50 cm
+
+Mesa:
+  - Ancho (conocido): 161.1 cm
+  - Largo (medido):  120.83 cm
+
+============================================================
+ANÁLISIS DE INCERTIDUMBRE
+============================================================
+
+Incertidumbre en calibración:
+  - Incertidumbre en píxeles: ±2.0 px
+  - Incertidumbre en centímetros: ±0.46 cm
+  - Incertidumbre relativa: ±0.39%
+
+Incertidumbre en mediciones:
+------------------------------------------------------------
+Elemento                         Valor (cm) Incert. (cm)  Incert. (%)
+------------------------------------------------------------
+Ancho del cuadro                     72.50 ±      1.23 ±      1.70%
+Largo de la mesa                    120.83 ±      1.23 ±      1.02%
+Ventana (ancho)                     144.99 ±      1.23 ±      0.85%
+Silla (ancho)                        38.66 ±      1.23 ±      3.19%
+Planta (altura)                      78.82 ±      1.23 ±      1.57%
+
+Resultados guardados en: results/measurements/measurements_data.json
+
+============================================================
+VISUALIZACIÓN DE RESULTADOS
+============================================================
+
+Imagen calibrada guardada en: results/figures/panorama_calibrated.jpg
+
+============================================================
+RESUMEN FINAL
+============================================================
+
+Escala calibrada: 0.2293 cm/píxel
+
+Dimensiones calculadas:
+  - Cuadro (ancho): 72.50 ± 1.23 cm
+  - Mesa (largo): 120.83 ± 1.23 cm
+
+Incertidumbre promedio en mediciones: 1.67%

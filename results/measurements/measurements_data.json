@@ -1,0 +1,51 @@
+{
+  "scale_factor_cm_per_px": 0.22926944971537003,
+  "calibration_uncertainty_cm": 0.45853889943074005,
+  "known_measurements": {
+    "cuadro_altura": 117.0,
+    "mesa_ancho": 161.1
+  },
+  "measurements": [
+    {
+      "elemento": "Ancho del cuadro",
+      "distancia_cm": 72.495,
+      "distancia_px": 316.2,
+      "incertidumbre_px": 5.0,
+      "incertidumbre_cm": 1.2346537719583046,
+      "incertidumbre_relativa_pct": 1.7030881742993373
+    },
+    {
+      "elemento": "Largo de la mesa",
+      "distancia_cm": 120.825,
+      "distancia_px": 527.0,
+      "incertidumbre_px": 5.0,
+      "incertidumbre_cm": 1.2346537719583046,
+      "incertidumbre_relativa_pct": 1.0218529045796023
+    },
+    {
+      "elemento": "Ventana (ancho)",
+      "distancia_cm": 144.99,
+      "distancia_px": 632.4,
+      "incertidumbre_px": 5.0,
+      "incertidumbre_cm": 1.2346537719583046,
+      "incertidumbre_relativa_pct": 0.8515440871496687
+    },
+    {
+      "elemento": "Silla (ancho)",
+      "distancia_cm": 38.664,
+      "distancia_px": 168.64000000000001,
+      "incertidumbre_px": 5.0,
+      "incertidumbre_cm": 1.2346537719583046,
+      "incertidumbre_relativa_pct": 3.1932903268112574
+    },
+    {
+      "elemento": "Planta (altura)",
+      "distancia_cm": 78.82283681214422,
+      "distancia_px": 343.8,
+      "incertidumbre_px": 5.0,
+      "incertidumbre_cm": 1.2346537719583046,
+      "incertidumbre_relativa_pct": 1.5663655634480818
+    }
+  ],
+  "timestamp": "2025-11-03T22:34:00.086043"
+}
