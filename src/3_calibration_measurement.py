@@ -1,6 +1,28 @@
 # ============================================
 # PARTE 3: CALIBRACIÓN Y MEDICIÓN
 # ============================================
+"""
+Módulo de calibración métrica y medición de objetos en panoramas.
+
+Este módulo implementa un sistema completo para calibrar un panorama y realizar
+mediciones métricas de objetos reales. El proceso incluye:
+
+1. Calibración: Establece una escala píxel->centímetros usando objetos de
+   dimensiones conocidas (cuadro: 117 cm altura, mesa: 161.1 cm ancho)
+2. Medición: Permite medir objetos adicionales usando la escala calibrada
+3. Análisis de incertidumbre: Calcula y propaga errores de medición
+4. Visualización: Genera panorama calibrado con barra de escala
+
+El módulo proporciona herramientas interactivas y programáticas para:
+- Seleccionar puntos de calibración mediante clicks
+- Medir distancias entre puntos
+- Calcular incertidumbres y propagación de errores
+- Guardar resultados en formato JSON
+
+Autor: Trabajo de Visión por Computador II
+Fecha: 2025
+"""
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,21 +46,53 @@ os.makedirs(measurements_dir, exist_ok=True)
 
 # Clase para capturar y guardar todos los prints
 class TeeOutput:
+    """
+    Clase para duplicar la salida estándar tanto en consola como en archivo.
+    
+    Esta clase implementa un sistema de logging que captura todos los prints
+    y los guarda simultáneamente en un archivo de texto, facilitando el
+    análisis posterior y la reproducibilidad de resultados.
+    
+    Attributes:
+        file: Archivo donde se guarda la salida
+        stdout: Referencia al stdout original del sistema
+    
+    Example:
+        >>> tee = TeeOutput('output.txt')
+        >>> sys.stdout = tee
+        >>> print("Esto se guardará en archivo y consola")
+        >>> tee.close()
+    """
+    
     def __init__(self, file_path):
+        """
+        Inicializa el objeto TeeOutput.
+        
+        Args:
+            file_path (str): Ruta del archivo donde se guardará la salida
+        """
         self.file = open(file_path, 'w', encoding='utf-8')
         self.stdout = sys.stdout
         self.write(f"=== EJECUCIÓN: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ===\n\n")
     
     def write(self, text):
+        """
+        Escribe texto tanto en consola como en archivo.
+        
+        Args:
+            text (str): Texto a escribir
+        """
         self.stdout.write(text)
         self.file.write(text)
         self.file.flush()
     
     def flush(self):
+        """Fuerza la escritura de buffers tanto en consola como en archivo."""
         self.stdout.flush()
         self.file.flush()
     
     def close(self):
+        """Cierra el archivo y restaura el stdout original."""
         self.file.close()
         sys.stdout = self.stdout
 
@@ -82,7 +136,39 @@ print(f"  - Mesa (ancho): {KNOWN_MEASUREMENTS['mesa_ancho']} cm")
 # 2. Herramienta interactiva para calibración
 # ----------------------------
 class MeasurementTool:
+    """
+    Herramienta interactiva para realizar mediciones en imágenes calibradas.
+    
+    Esta clase proporciona una interfaz para medir distancias entre puntos
+    en una imagen que ha sido previamente calibrada. Permite hacer clicks
+    en la imagen para seleccionar puntos y calcular distancias automáticamente.
+    
+    Attributes:
+        img (numpy.ndarray): Copia de la imagen de trabajo
+        original_img (numpy.ndarray): Copia de la imagen original
+        scale_factor (float): Factor de escala en cm/píxel (None si no está calibrado)
+        points (list): Lista temporal de puntos seleccionados
+        measurements (list): Lista de todas las mediciones realizadas
+        current_measurement: Medición actual en proceso
+        fig: Figura de matplotlib
+        ax: Ejes de matplotlib
+        cid: ID del callback de eventos
+    
+    Example:
+        >>> tool = MeasurementTool(img, scale_factor=0.2293)
+        >>> # Configurar figura y conectar eventos
+        >>> # tool.on_click procesará los clicks
+    """
+    
     def __init__(self, img, scale_factor=None):
+        """
+        Inicializa la herramienta de medición.
+        
+        Args:
+            img (numpy.ndarray): Imagen donde se realizarán las mediciones
+            scale_factor (float, optional): Factor de escala en cm/píxel.
+                                          Si es None, las mediciones serán en píxeles.
+        """
         self.img = img.copy()
         self.original_img = img.copy()
         self.scale_factor = scale_factor  # cm/pixel
@@ -94,6 +180,16 @@ class MeasurementTool:
         self.cid = None
         
     def on_click(self, event):
+        """
+        Maneja eventos de click del mouse para seleccionar puntos.
+        
+        Cuando se hace click en la imagen, se agrega el punto a la lista.
+        Si se seleccionan dos puntos, se calcula y dibuja la distancia
+        entre ellos automáticamente.
+        
+        Args:
+            event: Evento de matplotlib con información del click
+        """
         if event.inaxes != self.ax:
             return
         if event.button == 1:  # Click izquierdo
@@ -133,7 +229,25 @@ class MeasurementTool:
                 self.points = []  # Reset para siguiente medición
                 
     def calibrate(self, point1, point2, real_distance_cm):
-        """Calibrar usando dos puntos y una distancia real conocida"""
+        """
+        Calibra el factor de escala usando dos puntos y una distancia real conocida.
+        
+        Calcula la distancia en píxeles entre dos puntos y la compara con la
+        distancia real conocida para establecer el factor de escala cm/píxel.
+        
+        Args:
+            point1 (tuple): Primer punto (x, y) en píxeles
+            point2 (tuple): Segundo punto (x, y) en píxeles
+            real_distance_cm (float): Distancia real conocida en centímetros
+        
+        Returns:
+            float: Factor de escala calculado (cm/píxel)
+        
+        Example:
+            >>> tool = MeasurementTool(img)
+            >>> scale = tool.calibrate((100, 200), (150, 250), 117.0)
+            >>> print(f"Escala: {scale:.4f} cm/px")
+        """
         dx = point2[0] - point1[0]
         dy = point2[1] - point1[1]
         distance_px = np.sqrt(dx**2 + dy**2)
@@ -141,7 +255,27 @@ class MeasurementTool:
         return self.scale_factor
     
     def measure_distance(self, point1, point2):
-        """Medir distancia entre dos puntos"""
+        """
+        Mide la distancia entre dos puntos.
+        
+        Calcula la distancia euclidiana entre dos puntos. Si hay un factor
+        de escala calibrado, también retorna la distancia en centímetros.
+        
+        Args:
+            point1 (tuple): Primer punto (x, y) en píxeles
+            point2 (tuple): Segundo punto (x, y) en píxeles
+        
+        Returns:
+            tuple: Contiene:
+                - distance_cm (float o None): Distancia en centímetros si hay escala,
+                                            None en caso contrario
+                - distance_px (float): Distancia en píxeles
+        
+        Example:
+            >>> tool = MeasurementTool(img, scale_factor=0.2293)
+            >>> dist_cm, dist_px = tool.measure_distance((100, 200), (150, 250))
+            >>> print(f"Distancia: {dist_cm:.2f} cm ({dist_px:.1f} px)")
+        """
         dx = point2[0] - point1[0]
         dy = point2[1] - point1[1]
         distance_px = np.sqrt(dx**2 + dy**2)
@@ -162,7 +296,32 @@ print("3. Luego haz clic en dos puntos para medir el ANCHO de la mesa")
 print("4. Presiona 'Enter' cuando termines")
 
 def interactive_calibration(img, num_measurements=2):
-    """Herramienta interactiva para seleccionar puntos de calibración"""
+    """
+    Herramienta interactiva para seleccionar puntos de calibración.
+    
+    Muestra la imagen y permite al usuario hacer click en dos puntos para
+    cada medición de calibración. Esto permite calibrar el sistema usando
+    objetos de dimensiones conocidas.
+    
+    Args:
+        img (numpy.ndarray): Imagen donde se realizará la calibración
+        num_measurements (int, optional): Número de mediciones de calibración
+                                         a realizar. Por defecto 2.
+    
+    Returns:
+        list: Lista de tuplas, cada una contiene dos puntos (x, y) para cada
+              medición: [(p1, p2), (p1, p2), ...]
+    
+    Note:
+        - El usuario debe hacer click en dos puntos para cada medición
+        - Se mostrarán diferentes títulos según el número de medición
+        - Si no se seleccionan 2 puntos, se mostrará una advertencia
+    
+    Example:
+        >>> measurements = interactive_calibration(panorama, num_measurements=2)
+        >>> # Usuario hace clicks...
+        >>> # measurements = [((x1, y1), (x2, y2)), ((x3, y3), (x4, y4))]
+    """
     measurements = []
     
     for i in range(num_measurements):
@@ -258,7 +417,35 @@ meas_tool = MeasurementTool(panorama_rgb, scale_factor)
 
 # Función para medir interactivamente elementos adicionales
 def measure_element_interactive(img, scale_factor, element_name):
-    """Medir interactivamente un elemento usando la escala calibrada"""
+    """
+    Mide interactivamente un elemento usando la escala calibrada.
+    
+    Muestra la imagen y permite al usuario hacer click en dos puntos para
+    medir un elemento específico. La distancia se calcula automáticamente
+    usando el factor de escala proporcionado.
+    
+    Args:
+        img (numpy.ndarray): Imagen donde se realizará la medición
+        scale_factor (float): Factor de escala en cm/píxel (debe estar calibrado)
+        element_name (str): Nombre del elemento a medir (para el título)
+    
+    Returns:
+        tuple o None: Si se seleccionaron 2 puntos, retorna:
+            - distance_cm (float): Distancia en centímetros
+            - distance_px (float): Distancia en píxeles
+                      Si no se seleccionaron puntos, retorna None
+    
+    Note:
+        - El usuario debe hacer click en dos puntos
+        - La distancia se muestra directamente en la imagen
+        - La función bloquea hasta que se cierre la ventana
+    
+    Example:
+        >>> result = measure_element_interactive(panorama, 0.2293, "Mesa")
+        >>> if result:
+        >>>     dist_cm, dist_px = result
+        >>>     print(f"Mesa: {dist_cm:.2f} cm")
+    """
     fig, ax = plt.subplots(figsize=(15, 10))
     ax.imshow(img)
     ax.set_title(f'Medir: {element_name}\n(Click en dos puntos, luego cierra la ventana)', fontsize=14)
