@@ -1,11 +1,196 @@
-=== EJECUCIÓN: 2025-11-03 22:25:47 ===
+=== EJECUCIÓN: 2025-11-27 11:44:59 ===
 
-Iniciando registro de imágenes...
-Imágenes a procesar: 3
-  - data/original/img1.jpg
-  - data/original/img2.jpg
-  - data/original/img3.jpg
-Imagen 1: 1214 matches, 543 inliers
-Imagen 2: 548 matches, 303 inliers
+Notebook de registro de imágenes iniciado
+Los logs se guardarán automáticamente en archivo de resultados
+============================================================
 
-Dimensiones del panorama: 2108x2292 píxeles
+============================================================
+CONFIGURACIÓN DEL PIPELINE DE REGISTRO
+============================================================
+
+✓ Verificando archivos de imágenes...
+  ✓ Imagen 1 encontrada: 1600x1200 píxeles (446.8 KB)
+  ✓ Imagen 2 encontrada: 1200x1600 píxeles (432.4 KB)
+  ✓ Imagen 3 encontrada: 1200x1600 píxeles (431.9 KB)
+
+✓ Todas las imágenes verificadas correctamente (3 imágenes)
+
+→ Configuración del pipeline:
+  - Detectores a probar: ORB y SIFT
+  - Proyección cilíndrica: f=900
+  - Mostrar pasos intermedios: Solo en primera ejecución
+
+
+============================================================
+PROCESANDO CON DETECTOR: ORB
+============================================================
+
+============================================================
+INICIANDO PIPELINE DE REGISTRO DE IMÁGENES
+============================================================
+
+Paso 1: Cargando 3 imágenes...
+  ✓ Imagen 1: 1600x1200 píxeles, 1,920,000 píxeles totales
+  ✓ Imagen 2: 1200x1600 píxeles, 1,920,000 píxeles totales
+  ✓ Imagen 3: 1200x1600 píxeles, 1,920,000 píxeles totales
+
+Paso 2: Aplicando proyección cilíndrica (f=900)...
+  → La proyección cilíndrica reduce distorsión al combinar imágenes
+  → Procesando imagen 1...
+    ✓ Imagen 1 proyectada: 1600x1200 → 1600x1200 píxeles
+  → Procesando imagen 2...
+    ✓ Imagen 2 proyectada: 1200x1600 → 1200x1600 píxeles
+  → Procesando imagen 3...
+    ✓ Imagen 3 proyectada: 1200x1600 → 1200x1600 píxeles
+  ✓ Todas las imágenes proyectadas correctamente
+
+Paso 3: Combinando imágenes (usando imagen 1 como referencia)...
+
+  ──────────────────────────────────────────────────
+  Procesando imagen 2 de 3:
+  ──────────────────────────────────────────────────
+  → Detectando características con ORB...
+✓ Detector ORB inicializado correctamente
+    ✓ Encontrados 5000 puntos clave en imagen 1
+    ✓ Encontrados 5000 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontradas 1091 correspondencias válidas (ratio test: 0.75)
+  → Generando visualización de matches...
+  → Estimando homografía con RANSAC usando 1091 puntos...
+    → Umbral RANSAC: 3.0 píxeles (más estricto para mejor alineación)
+    ✓ Homografía estimada: 632 inliers de 1091 puntos (57.9%)
+  → Resumen imagen 2: 1091 matches, 632 inliers (57.9%)
+  → Aplicando transformación y combinando imágenes...
+    ✓ Panorama combinado: 1810x1907 píxeles
+
+  ──────────────────────────────────────────────────
+  Procesando imagen 3 de 3:
+  ──────────────────────────────────────────────────
+  → Detectando características con ORB...
+✓ Detector ORB inicializado correctamente
+    ✓ Encontrados 5000 puntos clave en imagen 1
+    ✓ Encontrados 5000 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontradas 541 correspondencias válidas (ratio test: 0.75)
+  → Generando visualización de matches...
+  → Estimando homografía con RANSAC usando 541 puntos...
+    → Umbral RANSAC: 3.0 píxeles (más estricto para mejor alineación)
+    ✓ Homografía estimada: 306 inliers de 541 puntos (56.6%)
+  ⚠ Advertencia: determinante de la homografía es 0.056, puede indicar transformación extrema
+  → Resumen imagen 3: 541 matches, 306 inliers (56.6%)
+  → Aplicando transformación y combinando imágenes...
+    ✓ Panorama combinado: 2283x2668 píxeles
+
+============================================================
+PANORAMA COMBINADO COMPLETADO
+============================================================
+
+→ Aplicando recorte automático para eliminar bordes negros...
+  → Panorama recortado: 2283x2668 → 1700x2366 píxeles
+
+============================================================
+PANORAMA COMPLETADO EXITOSAMENTE
+============================================================
+
+
+✓ Panorama con ORB completado:
+  - Dimensiones: 1700x2366 píxeles
+  - Píxeles totales: 4,022,200
+  - Tamaño en memoria: 11.51 MB
+  - Relación de aspecto: 0.719
+
+============================================================
+PROCESANDO CON DETECTOR: SIFT
+============================================================
+→ Ejecutando con SIFT (sin mostrar pasos intermedios)...
+
+============================================================
+INICIANDO PIPELINE DE REGISTRO DE IMÁGENES
+============================================================
+
+Paso 1: Cargando 3 imágenes...
+  ✓ Imagen 1: 1600x1200 píxeles, 1,920,000 píxeles totales
+  ✓ Imagen 2: 1200x1600 píxeles, 1,920,000 píxeles totales
+  ✓ Imagen 3: 1200x1600 píxeles, 1,920,000 píxeles totales
+
+Paso 2: Aplicando proyección cilíndrica (f=900)...
+  → La proyección cilíndrica reduce distorsión al combinar imágenes
+  → Procesando imagen 1...
+    ✓ Imagen 1 proyectada: 1600x1200 → 1600x1200 píxeles
+  → Procesando imagen 2...
+    ✓ Imagen 2 proyectada: 1200x1600 → 1200x1600 píxeles
+  → Procesando imagen 3...
+    ✓ Imagen 3 proyectada: 1200x1600 → 1200x1600 píxeles
+  ✓ Todas las imágenes proyectadas correctamente
+
+Paso 3: Combinando imágenes (usando imagen 1 como referencia)...
+
+  ──────────────────────────────────────────────────
+  Procesando imagen 2 de 3:
+  ──────────────────────────────────────────────────
+  → Detectando características con SIFT...
+✓ Detector SIFT inicializado correctamente
+    ✓ Encontrados 5116 puntos clave en imagen 1
+    ✓ Encontrados 4455 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontradas 1209 correspondencias válidas (ratio test: 0.75)
+  → Estimando homografía con RANSAC usando 1209 puntos...
+    → Umbral RANSAC: 3.0 píxeles (más estricto para mejor alineación)
+    ✓ Homografía estimada: 403 inliers de 1209 puntos (33.3%)
+  → Resumen imagen 2: 1209 matches, 403 inliers (33.3%)
+  → Aplicando transformación y combinando imágenes...
+    ✓ Panorama combinado: 1646x2023 píxeles
+
+  ──────────────────────────────────────────────────
+  Procesando imagen 3 de 3:
+  ──────────────────────────────────────────────────
+  → Detectando características con SIFT...
+✓ Detector SIFT inicializado correctamente
+    ✓ Encontrados 5612 puntos clave en imagen 1
+    ✓ Encontrados 4800 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontradas 645 correspondencias válidas (ratio test: 0.75)
+  → Estimando homografía con RANSAC usando 645 puntos...
+    → Umbral RANSAC: 3.0 píxeles (más estricto para mejor alineación)
+    ✓ Homografía estimada: 298 inliers de 645 puntos (46.2%)
+  → Resumen imagen 3: 645 matches, 298 inliers (46.2%)
+  → Aplicando transformación y combinando imágenes...
+    ✓ Panorama combinado: 2086x2325 píxeles
+
+============================================================
+PANORAMA COMBINADO COMPLETADO
+============================================================
+  → Panorama recortado: 2086x2325 → 1866x2066 píxeles
+
+============================================================
+PANORAMA COMPLETADO EXITOSAMENTE
+============================================================
+
+
+✓ Panorama con SIFT completado:
+  - Dimensiones: 1866x2066 píxeles
+  - Píxeles totales: 3,855,156
+  - Tamaño en memoria: 11.03 MB
+  - Relación de aspecto: 0.903
+
+============================================================
+GUARDANDO RESULTADOS
+============================================================
+✓ Panorama con ORB guardado: panorama_orb.jpg
+✓ Panorama con SIFT guardado: panorama_sift.jpg
+✓ Panorama principal guardado: panorama.jpg (usando SIFT)
+
+============================================================
+COMPARACIÓN DE RESULTADOS
+============================================================
+
+→ Visualizando comparación de panoramas...
+
+→ Visualizando panoramas individuales...
+
+
+✓ Proceso completado exitosamente
+  → Se generaron 2 panoramas con diferentes detectores
+  → Los panoramas han sido recortados para eliminar bordes negros
+  → Se aplicó blending mejorado para transiciones más suaves
+

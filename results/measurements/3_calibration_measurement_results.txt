@@ -1,93 +1,155 @@
-=== EJECUCIÓN: 2025-11-03 22:34:00 ===
+=== EJECUCIÓN: 2025-11-27 11:56:17 ===
+
+Notebook de calibración y medición iniciado
+Los logs se guardarán automáticamente en archivo de resultados
+============================================================
 
 ============================================================
 CALIBRACIÓN Y MEDICIÓN EN PANORAMA
 ============================================================
+Cargando panorama y configurando dimensiones conocidas para calibración...
 
-Panorama cargado: 2108x2292 píxeles
+→ Cargando panorama desde archivo...
+  ✓ Panorama cargado exitosamente
+    - Dimensiones: 1866x2066 píxeles
+    - Píxeles totales: 3,855,156
+    - Tamaño en memoria: 11.03 MB
 
-Dimensiones conocidas para calibración:
+✓ Dimensiones conocidas configuradas para calibración:
   - Cuadro de la Virgen de Guadalupe (altura): 117.0 cm
   - Mesa (ancho): 161.1 cm
+
+  → Estas dimensiones se usarán para calcular la escala (cm/píxel)
 
 ============================================================
 CALIBRACIÓN INTERACTIVA
 ============================================================
 
-Instrucciones:
-1. Haz clic en dos puntos para medir la ALTURA del cuadro de la Virgen de Guadalupe
-2. Presiona 'Enter' cuando termines
-3. Luego haz clic en dos puntos para medir el ANCHO de la mesa
-4. Presiona 'Enter' cuando termines
+→ Proceso de calibración:
+  La calibración permite convertir distancias en píxeles a distancias reales en centímetros
+  usando dimensiones conocidas del escenario (cuadro y mesa)
 
-Usando escala estimada (no interactivo): 0.2293 cm/px
-NOTA: Para mayor precisión, cambia USE_INTERACTIVE a True
+→ Modo no interactivo: usando escala estimada
+  → Ancho estimado de mesa en píxeles: 622.0 px
+  → Escala calculada: 0.2590 cm/píxel
+
+  ⚠ NOTA: Para mayor precisión, cambia USE_INTERACTIVE a True
+     La calibración interactiva permite seleccionar puntos exactos
 
 ============================================================
 CÁLCULO DE DIMENSIONES ADICIONALES
 ============================================================
+Usando la escala calibrada para medir elementos adicionales del panorama...
+  ✓ Herramienta de medición inicializada con escala: 0.2590 cm/píxel
 
-NOTA: Para mediciones precisas, usa la herramienta interactiva.
-Las mediciones siguientes son ejemplos con valores estimados.
+→ Modo no interactivo: usando mediciones estimadas
+  ⚠ NOTA: Para mayor precisión, cambia USE_INTERACTIVE_MEASUREMENTS a True
+     Las mediciones estimadas se basan en proporciones del panorama
 
-
-Usando mediciones estimadas (cambiar USE_INTERACTIVE_MEASUREMENTS a True para interactivo)
-
-Mediciones realizadas:
-------------------------------------------------------------
-Ancho del cuadro              :   72.50 cm (0.725 m) [316.2 px]
-Largo de la mesa              :  120.83 cm (1.208 m) [527.0 px]
-Ventana (ancho)               :  144.99 cm (1.450 m) [632.4 px]
-Silla (ancho)                 :   38.66 cm (0.387 m) [168.6 px]
-Planta (altura)               :   78.82 cm (0.788 m) [343.8 px]
+✓ Mediciones realizadas:
+--------------------------------------------------------------------------------
+Elemento                        Distancia (cm)   Distancia (m)      Píxeles
+--------------------------------------------------------------------------------
+Ancho del cuadro                        72.49 cm          0.725 m       279.9 px
+Largo de la mesa                       120.83 cm          1.208 m       466.5 px
+Ventana (ancho)                        144.99 cm          1.450 m       559.8 px
+Silla (ancho)                           38.66 cm          0.387 m       149.3 px
+Planta (altura)                         80.27 cm          0.803 m       309.9 px
 
 ============================================================
 DIMENSIONES DEL CUADRO Y MESA
 ============================================================
+Resumen de dimensiones completas de los elementos de referencia:
 
-Cuadro de la Virgen de Guadalupe:
+✓ Cuadro de la Virgen de Guadalupe:
   - Altura (conocida): 117.0 cm
-  - Ancho (medido):    72.50 cm
+  - Ancho (medido):    72.49 cm
+  - Área total:         8481.91 cm² (0.8482 m²)
 
-Mesa:
+✓ Mesa:
   - Ancho (conocido): 161.1 cm
   - Largo (medido):  120.83 cm
+  - Área total:       19464.91 cm² (1.9465 m²)
 
 ============================================================
 ANÁLISIS DE INCERTIDUMBRE
 ============================================================
+Calculando incertidumbre en las mediciones debido a errores en la calibración...
 
-Incertidumbre en calibración:
+✓ Incertidumbre en calibración:
   - Incertidumbre en píxeles: ±2.0 px
-  - Incertidumbre en centímetros: ±0.46 cm
-  - Incertidumbre relativa: ±0.39%
+    (Representa el error típico al seleccionar un píxel)
+  - Incertidumbre en centímetros: ±0.52 cm
+    (Calculado como: 2.0 px × 0.2590 cm/px)
+  - Incertidumbre relativa: ±0.44%
+    (Porcentaje respecto a la dimensión de referencia: 117.0 cm)
 
-Incertidumbre en mediciones:
-------------------------------------------------------------
+✓ Propagación de incertidumbre en mediciones:
+  (La incertidumbre total combina errores de calibración y medición)
+--------------------------------------------------------------------------------
 Elemento                         Valor (cm) Incert. (cm)  Incert. (%)
-------------------------------------------------------------
-Ancho del cuadro                     72.50 ±      1.23 ±      1.70%
-Largo de la mesa                    120.83 ±      1.23 ±      1.02%
-Ventana (ancho)                     144.99 ±      1.23 ±      0.85%
-Silla (ancho)                        38.66 ±      1.23 ±      3.19%
-Planta (altura)                      78.82 ±      1.23 ±      1.57%
+--------------------------------------------------------------------------------
+Ancho del cuadro                     72.49 ±      1.39 ±      1.92%
+Largo de la mesa                    120.83 ±      1.39 ±      1.15%
+Ventana (ancho)                     144.99 ±      1.39 ±      0.96%
+Silla (ancho)                        38.66 ±      1.39 ±      3.61%
+Planta (altura)                      80.27 ±      1.39 ±      1.74%
+--------------------------------------------------------------------------------
 
-Resultados guardados en: results/measurements/measurements_data.json
+  → Incertidumbre promedio: 1.88%
+  → Incertidumbre mínima: 0.96%
+  → Incertidumbre máxima: 3.61%
+
+→ Guardando resultados en archivo JSON...
+  ✓ Resultados guardados exitosamente
+    - Archivo: measurements_data.json
+    - Escala: 0.2590 cm/píxel
+    - Mediciones guardadas: 5 elementos
 
 ============================================================
 VISUALIZACIÓN DE RESULTADOS
 ============================================================
+Generando visualización del panorama con barra de escala calibrada...
 
-Imagen calibrada guardada en: results/figures/panorama_calibrated.jpg
+→ Agregando barra de escala:
+  - Longitud de barra: 50 cm
+  - Longitud en píxeles: 193.0 px
+  - Posición: (1623, 2016)
+
+→ Guardando imagen calibrada...
+  ✓ Imagen calibrada guardada exitosamente
+    - Archivo: panorama_calibrated.jpg
+    - Resolución: 150 DPI
+    - Incluye barra de escala de 50 cm
 
 ============================================================
 RESUMEN FINAL
 ============================================================
+Resumen completo del proceso de calibración y medición:
 
-Escala calibrada: 0.2293 cm/píxel
+✓ Escala calibrada:
+  - Valor: 0.2590 cm/píxel
+  - Equivalente: 3.86 píxeles/cm
+  - Método: Estimado
 
-Dimensiones calculadas:
-  - Cuadro (ancho): 72.50 ± 1.23 cm
-  - Mesa (largo): 120.83 ± 1.23 cm
+✓ Dimensiones principales calculadas:
+  - Cuadro (ancho): 72.49 ± 1.39 cm
+  - Mesa (largo):   120.83 ± 1.39 cm
 
-Incertidumbre promedio en mediciones: 1.67%
+✓ Estadísticas de incertidumbre:
+  - Incertidumbre promedio: 1.88%
+  - Incertidumbre mínima:  0.96%
+  - Incertidumbre máxima:  3.61%
+
+✓ Archivos generados:
+  - measurements_data.json: Datos completos de mediciones
+  - panorama_calibrated.jpg: Panorama con barra de escala
+  - 3_calibration_measurement_results.txt: Log completo del proceso
+
+✓ Total de elementos medidos: 5
+  → Todos los resultados incluyen incertidumbre calculada
+
+============================================================
+PROCESO COMPLETADO EXITOSAMENTE
+============================================================
+

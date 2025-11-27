@@ -1,29 +1,537 @@
-=== EJECUCIÓN: 2025-11-03 22:20:00 ===
+=== EJECUCIÓN: 2025-11-27 11:22:08 ===
 
-Homografía Verdadera (H_true):
-[[  1.12763114   0.41042417 -67.61106339]
- [ -0.41042417   1.12763114  41.55860541]
- [  0.           0.           1.        ]]
-Método: SIFT
-Homografía estimada (H_est):
-[[ 7.79137492e-01 -2.78959906e-01  6.45200996e+01]
- [ 2.83564079e-01  7.77164608e-01 -1.28110800e+01]
- [-2.33267082e-05  6.57173833e-06  1.00000000e+00]]
-RMSE de puntos: 231.6236 px
-Error angular: 39.8847°
-Error de escala: 30.905%
+============================================================
+PASO 1: CREACIÓN DE IMAGEN SINTÉTICA BASE
+============================================================
+Creando imagen sintética con formas geométricas para validación...
 
-Variación de parámetros:
-Angulo | Escala | RMSE(px) | Error Rot(°) | Error Escala(%)
-   5.0 |   1.00 |    83.191 |       11.737 |          4.112
-   5.0 |   1.10 |   103.484 |        8.605 |         14.987
-   5.0 |   1.30 |   169.435 |       10.864 |         40.874
-  15.0 |   1.00 |   161.791 |       30.017 |          6.207
-  15.0 |   1.10 |   647.166 |       56.265 |         10.704
-  15.0 |   1.30 |   211.578 |       30.505 |         46.390
-  30.0 |   1.00 |   290.490 |       59.399 |          1.271
-  30.0 |   1.10 |   297.040 |       65.525 |         26.467
-  30.0 |   1.30 |   325.603 |       60.306 |         44.851
-  45.0 |   1.00 |   405.195 |       86.334 |         26.714
-  45.0 |   1.10 |   467.826 |       97.032 |         50.753
-  45.0 |   1.30 |   427.461 |       96.166 |         44.428
+✓ Imagen sintética creada exitosamente:
+  - Dimensiones: 400x400 píxeles
+  - Tipo de datos: uint8
+  - Canales: 3 (BGR)
+  - Píxeles totales: 160,000
+  - Elementos geométricos: rectángulo, círculo, línea, texto
+
+  → Guardando imagen base...
+  ✓ Imagen guardada correctamente
+
+
+============================================================
+PASO 2: APLICACIÓN DE TRANSFORMACIÓN CONOCIDA
+============================================================
+Aplicando transformación conocida a la imagen base...
+(Esta transformación será la referencia para validar la estimación)
+
+✓ Parámetros de transformación configurados:
+  - Rotación: 20°
+  - Escala: 1.2x
+  - Traslación X: 40 píxeles
+  - Traslación Y: -15 píxeles
+  - Centro de rotación: (200.0, 200.0)
+
+  → Aplicando transformación...
+
+✓ Imagen transformada generada:
+  - Dimensiones: 400x400 píxeles
+  - Píxeles totales: 160,000
+
+  → Guardando imagen transformada...
+  ✓ Imagen transformada guardada correctamente
+
+✓ Homografía verdadera (H_true) calculada:
+  [Esta es la transformación exacta que aplicamos]
+  [La compararemos con la estimación para validar el algoritmo]
+
+  Matriz H_true (3x3):
+  [  1.12763114   0.41042417 -67.61106339]
+  [-0.41042417  1.12763114 41.55860541]
+  [0. 0. 1.]
+
+  Parámetros extraídos de H_true:
+  - Rotación aproximada: -20.00°
+  - Escala aproximada: 1.2000
+  - Traslación: (-67.61, 41.56) píxeles
+
+
+============================================================
+PASO 3: DETECCIÓN DE PUNTOS Y ESTIMACIÓN DE HOMOGRAFÍA
+============================================================
+Estimando la homografía entre imagen base e imagen transformada...
+(Este es el proceso que queremos validar)
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 162 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 37 matches válidos
+    ✓ Tasa de retención: 62.7%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 25 inliers de 37 matches
+    ✓ Tasa de inliers: 67.6%
+
+✓ Resumen del proceso de estimación:
+  - Detector utilizado: SIFT
+  - Keypoints detectados: 59 en imagen base, 162 en imagen transformada
+  - Matches iniciales: 59
+  - Matches válidos (ratio test): 37
+  - Inliers (RANSAC): 25
+
+✓ Homografía estimada (H_est) calculada exitosamente:
+  [Esta es la transformación que el algoritmo estimó automáticamente]
+
+  Matriz H_est (3x3):
+  [ 0.77913749 -0.27895991 64.52009964]
+  [  0.28356408   0.77716461 -12.81108002]
+  [-2.33267082e-05  6.57173833e-06  1.00000000e+00]
+
+  Parámetros extraídos de H_est:
+  - Rotación estimada: 20.00°
+  - Escala estimada: 0.8291
+  - Traslación estimada: (64.52, -12.81) píxeles
+
+
+============================================================
+PASO 4: COMPARACIÓN DE TRANSFORMACIONES - MÉTRICAS
+============================================================
+Comparando la homografía verdadera (H_true) con la estimada (H_est)...
+(Aquí validamos qué tan preciso es el algoritmo de registro)
+
+✓ Métricas de error calculadas:
+
+  1. RMSE (Root Mean Square Error):
+     - Valor: 231.6236 píxeles
+     - Interpretación: Error promedio en la transformación de las esquinas
+     - Errores por esquina:
+       Esquina superior-izquierda: 142.8801 px
+       Esquina superior-derecha: 223.4999 px
+       Esquina inferior-derecha: 292.9465 px
+       Esquina inferior-izquierda: 241.6886 px
+
+  2. Error angular:
+     - Valor: 39.8847°
+     - Rotación verdadera: 20°
+     - Rotación estimada: 19.9988°
+     - Diferencia: 0.0012°
+
+  3. Error de escala:
+     - Valor: 30.905%
+     - Escala verdadera: 1.2000
+     - Escala estimada: 0.8291
+     - Diferencia absoluta: 0.3709
+
+✓ Resumen de precisión del algoritmo:
+  - RMSE: 231.6236 px
+  - Error angular: 39.8847°
+  - Error de escala: 30.905%
+
+✓ Evaluación cualitativa de la precisión:
+  - RMSE: ALTO (> 200 px)
+  - Error angular: ALTO (> 15°)
+  - Error de escala: ALTO (> 15%)
+
+
+============================================================
+PASO 5: VISUALIZACIÓN DE COINCIDENCIAS
+============================================================
+Generando visualización de los matches detectados entre imágenes...
+
+✓ Preparando visualización:
+  - Total de matches válidos: 37
+  - Matches a mostrar: 30 (para mejor visualización)
+
+  → Detectando keypoints para visualización...
+    ✓ Keypoints listos para visualización
+
+  → Creando imagen de matches...
+  → Guardando imagen de matches...
+    ✓ Imagen de matches guardada correctamente
+
+
+============================================================
+PASO 6: EXPERIMENTO - EVALUACIÓN DE PARÁMETROS
+============================================================
+Ejecutando experimento sistemático con múltiples transformaciones...
+(Esto nos permite evaluar el rendimiento del algoritmo en diferentes condiciones)
+
+✓ Configuración del experimento:
+  - Ángulos a probar: [5, 15, 30, 45]°
+  - Escalas a probar: [1.0, 1.1, 1.3]
+  - Traslación fija: (30, 20) píxeles
+  - Total de combinaciones: 12
+
+✓ Procesando 12 combinaciones de parámetros...
+  (Esto puede tomar unos momentos)
+
+  ───────────────────────────────────────────────────────
+  Combinación 1/12: Ángulo=5°, Escala=1.0
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 130 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 33 matches válidos
+    ✓ Tasa de retención: 55.9%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 25 inliers de 33 matches
+    ✓ Tasa de inliers: 75.8%
+    ✓ Resultado exitoso:
+      - Matches: 33, Inliers: 25
+      - RMSE: 83.191 px
+      - Error angular: 11.737°
+      - Error escala: 4.112%
+
+  ───────────────────────────────────────────────────────
+  Combinación 2/12: Ángulo=5°, Escala=1.1
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 125 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 34 matches válidos
+    ✓ Tasa de retención: 57.6%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 24 inliers de 34 matches
+    ✓ Tasa de inliers: 70.6%
+    ✓ Resultado exitoso:
+      - Matches: 34, Inliers: 24
+      - RMSE: 103.484 px
+      - Error angular: 8.605°
+      - Error escala: 14.987%
+
+  ───────────────────────────────────────────────────────
+  Combinación 3/12: Ángulo=5°, Escala=1.3
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 170 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 41 matches válidos
+    ✓ Tasa de retención: 69.5%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 28 inliers de 41 matches
+    ✓ Tasa de inliers: 68.3%
+    ✓ Resultado exitoso:
+      - Matches: 41, Inliers: 28
+      - RMSE: 169.435 px
+      - Error angular: 10.864°
+      - Error escala: 40.874%
+
+  ───────────────────────────────────────────────────────
+  Combinación 4/12: Ángulo=15°, Escala=1.0
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 126 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 38 matches válidos
+    ✓ Tasa de retención: 64.4%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 28 inliers de 38 matches
+    ✓ Tasa de inliers: 73.7%
+    ✓ Resultado exitoso:
+      - Matches: 38, Inliers: 28
+      - RMSE: 161.791 px
+      - Error angular: 30.017°
+      - Error escala: 6.207%
+
+  ───────────────────────────────────────────────────────
+  Combinación 5/12: Ángulo=15°, Escala=1.1
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 117 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 34 matches válidos
+    ✓ Tasa de retención: 57.6%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 20 inliers de 34 matches
+    ✓ Tasa de inliers: 58.8%
+    ✓ Resultado exitoso:
+      - Matches: 34, Inliers: 20
+      - RMSE: 647.166 px
+      - Error angular: 56.265°
+      - Error escala: 10.704%
+
+  ───────────────────────────────────────────────────────
+  Combinación 6/12: Ángulo=15°, Escala=1.3
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 155 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 35 matches válidos
+    ✓ Tasa de retención: 59.3%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 23 inliers de 35 matches
+    ✓ Tasa de inliers: 65.7%
+    ✓ Resultado exitoso:
+      - Matches: 35, Inliers: 23
+      - RMSE: 211.578 px
+      - Error angular: 30.505°
+      - Error escala: 46.390%
+
+  ───────────────────────────────────────────────────────
+  Combinación 7/12: Ángulo=30°, Escala=1.0
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 134 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 37 matches válidos
+    ✓ Tasa de retención: 62.7%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 28 inliers de 37 matches
+    ✓ Tasa de inliers: 75.7%
+    ✓ Resultado exitoso:
+      - Matches: 37, Inliers: 28
+      - RMSE: 290.490 px
+      - Error angular: 59.399°
+      - Error escala: 1.271%
+
+  ───────────────────────────────────────────────────────
+  Combinación 8/12: Ángulo=30°, Escala=1.1
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 124 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 34 matches válidos
+    ✓ Tasa de retención: 57.6%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 20 inliers de 34 matches
+    ✓ Tasa de inliers: 58.8%
+    ✓ Resultado exitoso:
+      - Matches: 34, Inliers: 20
+      - RMSE: 297.040 px
+      - Error angular: 65.525°
+      - Error escala: 26.467%
+
+  ───────────────────────────────────────────────────────
+  Combinación 9/12: Ángulo=30°, Escala=1.3
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 137 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 32 matches válidos
+    ✓ Tasa de retención: 54.2%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 22 inliers de 32 matches
+    ✓ Tasa de inliers: 68.8%
+    ✓ Resultado exitoso:
+      - Matches: 32, Inliers: 22
+      - RMSE: 325.603 px
+      - Error angular: 60.306°
+      - Error escala: 44.851%
+
+  ───────────────────────────────────────────────────────
+  Combinación 10/12: Ángulo=45°, Escala=1.0
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 128 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 35 matches válidos
+    ✓ Tasa de retención: 59.3%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 28 inliers de 35 matches
+    ✓ Tasa de inliers: 80.0%
+    ✓ Resultado exitoso:
+      - Matches: 35, Inliers: 28
+      - RMSE: 405.195 px
+      - Error angular: 86.334°
+      - Error escala: 26.714%
+
+  ───────────────────────────────────────────────────────
+  Combinación 11/12: Ángulo=45°, Escala=1.1
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 136 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 27 matches válidos
+    ✓ Tasa de retención: 45.8%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 21 inliers de 27 matches
+    ✓ Tasa de inliers: 77.8%
+    ✓ Resultado exitoso:
+      - Matches: 27, Inliers: 21
+      - RMSE: 467.826 px
+      - Error angular: 97.032°
+      - Error escala: 50.753%
+
+  ───────────────────────────────────────────────────────
+  Combinación 12/12: Ángulo=45°, Escala=1.3
+  ───────────────────────────────────────────────────────
+    → Aplicando transformación...
+    → Guardando imagen transformada...
+      ✓ Imagen guardada
+    → Estimando homografía...
+  → Obteniendo detector de características...
+    ✓ Detector SIFT seleccionado
+  → Detectando características en imagen 1...
+    ✓ Encontrados 59 puntos clave en imagen 1
+  → Detectando características en imagen 2...
+    ✓ Encontrados 151 puntos clave en imagen 2
+  → Buscando correspondencias entre imágenes...
+    ✓ Encontrados 59 matches iniciales (k=2)
+    ✓ Después del ratio test (0.75): 30 matches válidos
+    ✓ Tasa de retención: 50.8%
+  → Estimando homografía con RANSAC (umbral=5.0 px)...
+    ✓ Homografía estimada: 20 inliers de 30 matches
+    ✓ Tasa de inliers: 66.7%
+    ✓ Resultado exitoso:
+      - Matches: 30, Inliers: 20
+      - RMSE: 427.461 px
+      - Error angular: 96.166°
+      - Error escala: 44.428%
+
+============================================================
+RESUMEN DE RESULTADOS DEL EXPERIMENTO
+============================================================
+
+✓ Tabla de resultados completos:
+--------------------------------------------------------------------------------
+  Ángulo |   Escala |    RMSE (px) |   Error Rot (°) |   Error Escala (%) |    Matches |    Inliers
+--------------------------------------------------------------------------------
+     5.0 |     1.00 |       83.191 |          11.737 |              4.112 |         33 |         25
+     5.0 |     1.10 |      103.484 |           8.605 |             14.987 |         34 |         24
+     5.0 |     1.30 |      169.435 |          10.864 |             40.874 |         41 |         28
+    15.0 |     1.00 |      161.791 |          30.017 |              6.207 |         38 |         28
+    15.0 |     1.10 |      647.166 |          56.265 |             10.704 |         34 |         20
+    15.0 |     1.30 |      211.578 |          30.505 |             46.390 |         35 |         23
+    30.0 |     1.00 |      290.490 |          59.399 |              1.271 |         37 |         28
+    30.0 |     1.10 |      297.040 |          65.525 |             26.467 |         34 |         20
+    30.0 |     1.30 |      325.603 |          60.306 |             44.851 |         32 |         22
+    45.0 |     1.00 |      405.195 |          86.334 |             26.714 |         35 |         28
+    45.0 |     1.10 |      467.826 |          97.032 |             50.753 |         27 |         21
+    45.0 |     1.30 |      427.461 |          96.166 |             44.428 |         30 |         20
+--------------------------------------------------------------------------------
+
+✓ Análisis estadístico de 12 casos exitosos:
+
+  RMSE (Root Mean Square Error):
+    - Mínimo: 83.191 px (Ángulo=5°, Escala=1.0)
+    - Máximo: 647.166 px (Ángulo=15°, Escala=1.1)
+    - Promedio: 299.188 px
+    - Desviación estándar: 159.776 px
+
+  Error angular:
+    - Mínimo: 8.605° (Ángulo=5°, Escala=1.1)
+    - Máximo: 97.032° (Ángulo=45°, Escala=1.1)
+    - Promedio: 51.063°
+
+  Error de escala:
+    - Mínimo: 1.271% (Ángulo=30°, Escala=1.0)
+    - Máximo: 50.753% (Ángulo=45°, Escala=1.1)
+    - Promedio: 26.480%
+
+✓ Conclusiones principales:
+  - Mejor resultado (menor RMSE): Ángulo=5°, Escala=1.0
+    → RMSE: 83.191 px, Error angular: 11.737°, Error escala: 4.112%
+  - Peor resultado (mayor RMSE): Ángulo=15°, Escala=1.1
+    → RMSE: 647.166 px, Error angular: 56.265°, Error escala: 10.704%
+
+  Análisis de rendimiento por ángulo:
+    Ángulo 5°: RMSE promedio = 118.703 px, Error angular promedio = 10.402°
+    Ángulo 15°: RMSE promedio = 340.179 px, Error angular promedio = 38.929°
+    Ángulo 30°: RMSE promedio = 304.378 px, Error angular promedio = 61.743°
+    Ángulo 45°: RMSE promedio = 433.494 px, Error angular promedio = 93.177°
+
+  Análisis de rendimiento por escala:
+    Escala 1.0: RMSE promedio = 235.167 px, Error de escala promedio = 9.576%
+    Escala 1.1: RMSE promedio = 378.879 px, Error de escala promedio = 25.728%
+    Escala 1.3: RMSE promedio = 283.519 px, Error de escala promedio = 44.136%
+
+

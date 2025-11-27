@@ -1,6 +1,7 @@
 {
-  "scale_factor_cm_per_px": 0.22926944971537003,
-  "calibration_uncertainty_cm": 0.45853889943074005,
+  "scale_factor_cm_per_px": 0.2590032154340836,
+  "calibration_uncertainty_cm": 0.5180064308681672,
+  "calibration_uncertainty_px": 2.0,
   "known_measurements": {
     "cuadro_altura": 117.0,
     "mesa_ancho": 161.1
@@ -8,44 +9,48 @@
   "measurements": [
     {
       "elemento": "Ancho del cuadro",
-      "distancia_cm": 72.495,
-      "distancia_px": 316.2,
+      "distancia_cm": 72.49499999999999,
+      "distancia_px": 279.9,
       "incertidumbre_px": 5.0,
-      "incertidumbre_cm": 1.2346537719583046,
-      "incertidumbre_relativa_pct": 1.7030881742993373
+      "incertidumbre_cm": 1.3947750006903032,
+      "incertidumbre_relativa_pct": 1.9239602740744925
     },
     {
       "elemento": "Largo de la mesa",
       "distancia_cm": 120.825,
-      "distancia_px": 527.0,
+      "distancia_px": 466.5,
       "incertidumbre_px": 5.0,
-      "incertidumbre_cm": 1.2346537719583046,
-      "incertidumbre_relativa_pct": 1.0218529045796023
+      "incertidumbre_cm": 1.3947750006903032,
+      "incertidumbre_relativa_pct": 1.1543761644446953
     },
     {
       "elemento": "Ventana (ancho)",
-      "distancia_cm": 144.99,
-      "distancia_px": 632.4,
+      "distancia_cm": 144.98999999999998,
+      "distancia_px": 559.8,
       "incertidumbre_px": 5.0,
-      "incertidumbre_cm": 1.2346537719583046,
-      "incertidumbre_relativa_pct": 0.8515440871496687
+      "incertidumbre_cm": 1.3947750006903032,
+      "incertidumbre_relativa_pct": 0.9619801370372463
     },
     {
       "elemento": "Silla (ancho)",
       "distancia_cm": 38.664,
-      "distancia_px": 168.64000000000001,
+      "distancia_px": 149.28,
       "incertidumbre_px": 5.0,
-      "incertidumbre_cm": 1.2346537719583046,
-      "incertidumbre_relativa_pct": 3.1932903268112574
+      "incertidumbre_cm": 1.3947750006903032,
+      "incertidumbre_relativa_pct": 3.6074255138896736
     },
     {
       "elemento": "Planta (altura)",
-      "distancia_cm": 78.82283681214422,
-      "distancia_px": 343.8,
+      "distancia_cm": 80.2650964630225,
+      "distancia_px": 309.9,
       "incertidumbre_px": 5.0,
-      "incertidumbre_cm": 1.2346537719583046,
-      "incertidumbre_relativa_pct": 1.5663655634480818
+      "incertidumbre_cm": 1.3947750006903032,
+      "incertidumbre_relativa_pct": 1.7377104895561486
     }
   ],
-  "timestamp": "2025-11-03T22:34:00.086043"
+  "panorama_dimensions": {
+    "width_px": 1866,
+    "height_px": 2066
+  },
+  "timestamp": "2025-11-27T11:56:17.600597"
 }
